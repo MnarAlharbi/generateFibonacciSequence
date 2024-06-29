@@ -1,0 +1,29 @@
+use Illuminate\Support\Collection;
+
+function generateFibonacciSequence($length) {
+    if ($length < 1) {
+        throw new InvalidArgumentException("Length must be a positive integer.");
+    }
+
+    $sequence = new Collection();
+
+    // Add the first two numbers in the sequence
+    $a = 0;
+    $b = 1;
+
+    for ($i = 0; $i < $length; $i++) {
+        $sequence->push($a);
+        $next = $a + $b;
+        $a = $b;
+        $b = $next;
+    }
+
+    return $sequence;
+}
+
+try {
+    $fibonacci = generateFibonacciSequence(10);
+    echo $fibonacci->implode(', '); // Outputs: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+} catch (InvalidArgumentException $e) {
+    echo $e->getMessage();
+}
